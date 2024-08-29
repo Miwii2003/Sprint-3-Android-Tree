@@ -3,7 +3,7 @@
 @Authores Jorge Ureta
 @Authores Jonathan V. Apiolaza
 @Authores Lautaro Silva
-@Date 23/08/2024
+@Date 28/08/2024
 @Version 1.6
 Aca se crea el primer usuario del Sistema que será el Administrador*/
 
@@ -62,7 +62,7 @@ VALUES
   
   
 Select * from Proveedores;
-
+/* Insertando datos al Cliente */
 INSERT INTO Clientes (id_cliente, nombre, apellido, direccion)
 VALUES
   (1, 'Monica', 'Gomez', 'Pasaje 1 - 123'),
@@ -72,7 +72,7 @@ VALUES
   (5, 'Maria', 'Acosta', 'Paris 2024');
 
 Select * from Clientes;
-
+/* Insertando datos a productos  */
 INSERT INTO Productos (id_producto, nombre, precio, categoria, id_proveedor, color, stock)
 VALUES
 (1, 'Cassettes', 30000.00, 'Musica', 2, 'Platiado', 15),
