@@ -129,9 +129,3 @@ UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto
 UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '8';
 UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '9';
 UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '10';
-
-select * from productos;
-
-UPDATE Productos
-SET categoria = 'Electrónica y computación'
-WHERE categoria = 'Electrónicos';
