@@ -1,0 +1,137 @@
+/*####SPRINT M3 #####
+@Authores Camilo Olivares
+@Authores Jorge Ureta
+@Authores Jonathan V. Apiolaza
+@Authores Lautaro Silva
+@Date 23/08/2024
+@Version 1.6
+Aca se crea el primer usuario del Sistema que será el Administrador*/
+
+CREATE USER 'usuario_admin'@'%' IDENTIFIED BY 'contraseña';
+
+/* Acá se le garantizan los permisos pertinentes al Usuario */
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON TeLoVendo.* TO 'usuario_admin'@'%';
+/*Acá se crea la Database*/
+
+
+CREATE DATABASE TeLoVendo CHARACTER SET utf8mb4;
+/* ACÁ SE SELECCIONA LA BASE DE DATOS */
+USE TeLoVendo;
+/* Aca se crearán las Tablas de Ley */
+CREATE TABLE Proveedores (
+  id_proveedor INT PRIMARY KEY,
+  nombre_representante VARCHAR(50),
+  nombre_corporativo VARCHAR(60),
+  telefono1 VARCHAR(20),
+  nombre_contacto1 VARCHAR(60),
+  telefono2 VARCHAR(20),
+  nombre_contacto2 VARCHAR(60),
+  categoria_producto VARCHAR(30),
+  correo_electronico VARCHAR(60)
+);
+
+/* Acá se crea la tabla cliente*/
+CREATE TABLE Clientes (
+  id_cliente INT PRIMARY KEY,
+  nombre VARCHAR(60),
+  apellido VARCHAR(60),
+  direccion VARCHAR(80)
+);
+
+/* Acá se crea la tabla productos*/
+CREATE TABLE Productos (
+  id_producto INT PRIMARY KEY,
+  nombre VARCHAR(60),
+  precio DECIMAL(10, 2),
+  categoria VARCHAR(60),
+  id_proveedor INT,
+  color VARCHAR(20),
+  stock INT,
+  FOREIGN KEY (id_proveedor) REFERENCES Proveedores(id_proveedor)
+);
+
+  /* Acá se crea la tabla proveedores*/
+INSERT INTO Proveedores (id_proveedor, nombre_corporativo, nombre_representante, telefono1, nombre_contacto1, telefono2, nombre_contacto2, categoria_producto, correo_electronico)
+VALUES
+(1,'TeLoLimpio SPA.', 'Camilo Olivares', '773453459', 'Camilo Olivares', '201346732', 'Camila Perez', 'Electrónicos', 'TeLoLimpio@TeloLimpio.cl'),
+(2,'Impeque SPA.', 'Jorge Ureta', '964573256', 'Jorge Ureta', '245768971', 'Alejandro Sanz', 'Música', 'ImpekeOk@impeke.cl'),
+(3,'Cleanix SPA.', 'Jonathan V. A.', '964573568', 'Jonathan V. A', '268974653', 'Roberto Nicollini', 'Tintas', 'Cleanix@Cleanix.cl'),
+(4,'Clinix SPA.', 'Ricardo Ordenes', '653897645', 'Ricardo Ordenes', '23768954', 'Gustavo Gatica', 'Insumos', 'Clinix@Clinix.cl'),
+(5,'Higienix SPA.', 'Pedro Pe', '876594358', 'Pedro Pe', '201375732', 'Roberto P.', 'Electrónicos', 'Higienix@Higienix.cl');
+  
+  
+Select * from Proveedores;
+
+INSERT INTO Clientes (id_cliente, nombre, apellido, direccion)
+VALUES
+  (1, 'Monica', 'Gomez', 'Pasaje 1 - 123'),
+  (2, 'Juan', 'Fuenzalida', 'Palmilla s/n'),
+  (3, 'Gabriel', 'Gonzalez', 'Arturo Prat 3'),
+  (4, 'Arturo', 'Perez', 'Centenario 245'),
+  (5, 'Maria', 'Acosta', 'Paris 2024');
+
+Select * from Clientes;
+
+INSERT INTO Productos (id_producto, nombre, precio, categoria, id_proveedor, color, stock)
+VALUES
+(1, 'Cassettes', 30000.00, 'Musica', 2, 'Platiado', 15),
+(2, 'TV', 350000.00, 'Electrónicos', 5, 'Negro', 3),
+(3, 'Hojas Carta', 260000.00, 'Insumos',4, 'Plomo', 5),
+(4, 'CDs', 2599.00, 'Musica', 2, 'Negro', 10),
+(5, 'Celular', 350000.00, 'Electrónicos', 1, 'Neon', 1),
+(6, 'Secador', 30000.00, 'Electrónicos', 5, 'Rosada', 5),
+(7, 'Alisadora', 25000.00, 'Electrónicos', 5, 'Amarilla', 10),
+(8, 'Tostadora', 25000.00, 'Electrónicos', 1, 'Blanca', 20),
+(9, 'Batidora', 25000.00, 'Electrónicos', 5, 'Blanca', 5),
+(10, 'Moledor', 2000.00, 'Electrónicos', 1, 'Azul', 85),
+(11, 'Tintas HP', 4500.00, 'tintas', 3, 'Negro', 20),
+(12, 'Tintas Canon', 2225.00, 'tintas', 3, 'Color', 9);
+
+select * from productos;
+
+
+/*Categoría de productos que más se repite: */
+
+SELECT categoria, COUNT(*) AS cantidad FROM Productos 
+GROUP BY categoria ORDER BY cantidad DESC LIMIT 2;
+
+/* Productos con mayor stock: */
+
+SELECT nombre, stock FROM Productos
+ORDER BY stock DESC LIMIT 1;
+
+
+/* Color de producto más común: */
+
+SELECT color, COUNT(*) AS cantidad FROM Productos
+GROUP BY color
+ORDER BY cantidad DESC LIMIT 1;
+
+/* Proveedores con menor stock de productos: */
+
+SELECT p.nombre_corporativo, SUM(pr.stock) AS stock_total
+FROM Proveedores p
+JOIN Productos pr ON p.id_proveedor = pr.id_proveedor
+GROUP BY p.nombre_corporativo
+ORDER BY stock_total ASC
+LIMIT 1;
+
+
+/* Cambio de nombre */
+
+select * from productos;
+
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '2';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '5';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '6';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '7';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '8';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '9';
+UPDATE Productos SET categoria = 'Electrónica y computación' WHERE id_producto = '10';
+
+select * from productos;
+
+UPDATE Productos
+SET categoria = 'Electrónica y computación'
+WHERE categoria = 'Electrónicos';
